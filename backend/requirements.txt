@@ -1,0 +1,17 @@
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+pydantic>=2.0.0
+SQLAlchemy>=2.0.0
+alembic>=1.11.0  # For database migrations
+python-dotenv>=1.0.0 # For .env file loading
+google-generativeai>=0.3.0 # For Gemini API
+docker>=6.1.0 # For Docker SDK
+# For SQLite, python has built-in support, but SQLAlchemy needs a driver if not using pysqlite implicitly
+# psycopg2-binary # If we were using PostgreSQL
+# mysqlclient # If we were using MySQL
+# pysqlite3 # Often bundled, but can be explicit if needed for specific versions/environments
+# Let's assume standard library's sqlite3 is sufficient for SQLAlchemy for now.
+# SQLAlchemy will use it by default for sqlite:// URLs.
+requests # Often a useful utility, good to have.
+passlib[bcrypt] # For potential future password hashing, not strictly needed now.
+python-jose[cryptography] # For potential JWT tokens, not strictly needed now.

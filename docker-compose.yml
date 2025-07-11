@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      # Map the host's backend/data directory to /app/data in the container
+      # This ensures the SQLite DB used by the app (via /app/data/coder_workspace.db)
+      # is the same file as used by local Alembic (via backend/data/coder_workspace.db)
+      - ./backend/data:/app/data
+    env_file:
+      - ./backend/.env
+    # No explicit depends_on for db service if SQLite is file-based and managed by backend
+    # The volume mount for './data' handles persistence.
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Assuming Vite's default dev port
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Avoids overwriting node_modules in container by local ones if any
+    depends_on:
+      - backend
+
+  db: # Placeholder for SQLite, though typically SQLite is just a file managed by the app.
+      # If we wanted a separate DB service (e.g. Postgres), it would be configured here.
+      # For SQLite, the backend service will manage the database file in a volume.
+      # This 'db' service might not be strictly necessary if backend handles the SQLite file.
+# Volumes
+volumes:
+  data: # For SQLite database persistence, used by the backend service.

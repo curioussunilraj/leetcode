@@ -1,0 +1,32 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+*.db
+*.sqlite3
+*.db-journal
+*.sqlite3-journal
+/data/*.db # Ignore the actual database file if it's directly in /data
+           # However, our .env specifies ./data/coder_workspace.db from the backend container's perspective
+           # and docker-compose mounts the host's ./data to /app/data in container.
+           # So the DB will be in the root /data directory.
+/workspace_temp/ # Temporary files for code execution
+*.log
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+htmlcov/
+.coverage
+*.prof
+*.prof.json
+# If you are using VSCode
+.vscode/
+# If you are using PyCharm
+.idea/
